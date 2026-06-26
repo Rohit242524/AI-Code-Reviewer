@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from backend.app.models.review_models import ReviewReq, ReviewRes
-from backend.app.services.gemini_service import gen_review
+from app.models.review_models import ReviewReq, ReviewRes
+from app.services.gemini_service import gen_review
 
 router = APIRouter()
 

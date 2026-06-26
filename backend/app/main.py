@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from backend.app.routes.review import router as review_router
+from app.routes.review import router as review_router
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

@@ -4,7 +4,7 @@ from pathlib import Path
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-from backend.app.prompts.review_prompt import REVIEW_PROMPT
+from app.prompts.review_prompt import REVIEW_PROMPT
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 ENV_PATH = BASE_DIR / ".env"
