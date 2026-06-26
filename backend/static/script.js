@@ -7,7 +7,7 @@ reviewBtn.addEventListener("click", async () => {
 
     const code = codeInput.value.trim();
 
-    if(code === ""){
+    if (code === "") {
         alert("Please enter Python code.");
         return;
     }
@@ -15,37 +15,36 @@ reviewBtn.addEventListener("click", async () => {
     loading.classList.remove("hidden");
     reviewOutput.textContent = "";
 
-    try{
+    try {
 
-        const response = await fetch("http://127.0.0.1:8000/review",{
-
-            method:"POST",
-
-            headers:{
-                "Content-Type":"application/json"
+        const response = await fetch("/review", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-
-            body:JSON.stringify({
-                code:code
+            body: JSON.stringify({
+                code: code
             })
-
         });
+
+        if (!response.ok) {
+            throw new Error("Server returned an error.");
+        }
 
         const data = await response.json();
 
         reviewOutput.textContent = data.review;
 
     }
+    catch (error) {
 
-    catch(error){
-
-        reviewOutput.textContent = "Unable to connect to the backend.";
+        reviewOutput.textContent =
+            "An error occurred while reviewing the code.";
 
         console.error(error);
 
     }
-
-    finally{
+    finally {
 
         loading.classList.add("hidden");
 
