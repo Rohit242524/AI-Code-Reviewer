@@ -4,6 +4,4 @@ class ReviewReq(BaseModel):
     code : str
 
 class ReviewRes(BaseModel):
-    summary : str
-    issues : list[str]
-    suggestions : list[str]
+    review : str

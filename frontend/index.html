@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Reviewer</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>AI Code Reviewer</h1>
+
+        <p class="subtitle">
+            Paste your Python code below and get an AI-powered review.
+        </p>
+
+        <textarea
+            id="codeInput"
+            placeholder="Paste your Python code here..."
+        ></textarea>
+
+        <button id="reviewBtn">
+            Review Code
+        </button>
+
+        <div id="loading" class="hidden">
+            Reviewing your code...
+        </div>
+
+        <div class="result">
+
+            <h2>Review</h2>
+
+            <pre id="reviewOutput">
+Your AI review will appear here...
+            </pre>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
