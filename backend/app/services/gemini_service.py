@@ -4,7 +4,8 @@ from pathlib import Path
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-from app.prompts.review_prompt import REVIEW_PROMPT
+from app.prompts.review_prompt import build_review_prompt
+
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 ENV_PATH = BASE_DIR / ".env"
@@ -20,9 +21,15 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 def gen_review(code: str):
 
-    prompt = REVIEW_PROMPT.format(code=code)
+    prompt = build_review_prompt(code)
 
-    response = model.generate_content(prompt)
-    print(response)
+    response = model.generate_content(
+        prompt,
+        stream=True
+    )
 
-    return response.text
+    for chunk in response:
+        text = getattr(chunk, "text", None)
+
+        if text:
+            yield text

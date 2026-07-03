@@ -31,20 +31,29 @@ reviewBtn.addEventListener("click", async () => {
             throw new Error("Server returned an error.");
         }
 
-        const data = await response.json();
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
 
-        reviewOutput.textContent = data.review;
+        while (true) {
 
-    }
-    catch (error) {
+            const { done, value } = await reader.read();
+
+            if (done) {
+                break;
+            }
+
+            reviewOutput.textContent += decoder.decode(value, { stream: true });
+
+        }
+
+    } catch (error) {
 
         reviewOutput.textContent =
             "An error occurred while reviewing the code.";
 
         console.error(error);
 
-    }
-    finally {
+    } finally {
 
         loading.classList.add("hidden");
 

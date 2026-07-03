@@ -1,21 +1,22 @@
 from fastapi import APIRouter
+from fastapi.responses import StreamingResponse
 
-from app.models.review_models import ReviewReq, ReviewRes
+from app.models.review_models import ReviewReq
 from app.services.gemini_service import gen_review
 from app.services.input_validator import validate_input
 
 router = APIRouter()
 
 
-@router.post("/review", response_model=ReviewRes)
-def reviewCode(request: ReviewReq):
+@router.post("/review")
+def review_code(request: ReviewReq):
+
     validation = validate_input(request.code)
 
     if not validation["valid"]:
         return validation
 
-    review = gen_review(request.code)
-
-    return ReviewRes(
-        review=review
+    return StreamingResponse(
+        gen_review(request.code),
+        media_type="text/plain"
     )
