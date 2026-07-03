@@ -1,7 +1,11 @@
 from pydantic import BaseModel
 
-class ReviewReq(BaseModel):
-    code : str
 
-class ReviewRes(BaseModel):
-    review : str
+class ProjectFile(BaseModel):
+    path: str
+    content: str
+
+
+class SkippedFile(BaseModel):
+    path: str
+    reason: str

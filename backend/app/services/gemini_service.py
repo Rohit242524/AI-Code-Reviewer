@@ -33,3 +33,16 @@ def gen_review(code: str):
 
         if text:
             yield text
+
+def gen_project_review(files):
+
+    for file in files:
+
+        yield "\n"
+        yield "=" * 60 + "\n"
+        yield f"Reviewing: {file.path}\n"
+        yield "=" * 60 + "\n\n"
+
+        yield from gen_review(file.content)
+
+        yield "\n\n"

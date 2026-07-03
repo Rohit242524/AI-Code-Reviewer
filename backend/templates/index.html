@@ -14,9 +14,25 @@
         <h1>AI Code Reviewer</h1>
 
         <p class="subtitle">
-            Paste your Python code below and get an AI-powered review.
+            Paste your Python code or upload a Python file for AI review.
         </p>
 
+        <!-- NEW -->
+        <label for="folderInput">
+            Upload Python File
+        </label>
+
+        <input
+            type="file"
+            id="folderInput"
+            webkitdirectory
+            directory
+            multiple
+        >
+
+        <p style="text-align:center; margin:10px 0;">OR</p>
+
+        <!-- Existing textarea -->
         <textarea
             id="codeInput"
             placeholder="Paste your Python code here..."
