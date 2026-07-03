@@ -23,5 +23,6 @@ def gen_review(code: str):
     prompt = REVIEW_PROMPT.format(code=code)
 
     response = model.generate_content(prompt)
+    print(response)
 
     return response.text
