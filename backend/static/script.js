@@ -13,6 +13,24 @@ const ignoredFolders = [
     "build"
 ];
 
+const ignoredExtensions = [
+    ".pyc",
+    ".log",
+    ".db",
+    ".sqlite",
+    ".env",
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".svg",
+    ".pdf",
+    ".zip",
+    ".exe",
+    ".dll",
+    ".so"
+];
+
 reviewBtn.addEventListener("click", async () => {
 
     const formData = new FormData();
@@ -25,11 +43,11 @@ reviewBtn.addEventListener("click", async () => {
 
             const path = file.webkitRelativePath || file.name;
 
-            if (
-                ignoredFolders.some(folder =>
-                    path.split("/").includes(folder)
-                )
-            ) {
+            if (ignoredFolders.some(folder => path.split("/").includes(folder))) {
+                continue;
+            }
+
+            if (ignoredExtensions.some(ext => path.endsWith(ext))) {
                 continue;
             }
 
@@ -45,8 +63,8 @@ reviewBtn.addEventListener("click", async () => {
             alert("No Python files found in the selected folder.");
             return;
         }
-    }
-    else {
+
+    } else {
 
         const code = codeInput.value.trim();
 
@@ -62,14 +80,16 @@ reviewBtn.addEventListener("click", async () => {
     reviewOutput.textContent = "";
 
     try {
-
         const response = await fetch("/review", {
             method: "POST",
             body: formData
         });
 
         if (!response.ok) {
-            throw new Error("Server returned an error.");
+
+            const error = await response.text();
+            throw new Error(error);
+
         }
 
         const reader = response.body.getReader();
@@ -86,20 +106,18 @@ reviewBtn.addEventListener("click", async () => {
             reviewOutput.textContent += decoder.decode(value, {
                 stream: true
             });
+
         }
 
-    }
-    catch (error) {
+    } catch (error) {
 
-        reviewOutput.textContent =
-            "An error occurred while reviewing the project.";
-
+        reviewOutput.textContent = error.message;
         console.error(error);
 
-    }
-    finally {
+    } finally {
 
         loading.classList.add("hidden");
 
     }
+
 });

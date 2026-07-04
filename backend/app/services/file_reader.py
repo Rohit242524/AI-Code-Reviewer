@@ -29,6 +29,9 @@ async def read_python_files(files: list[UploadFile]) -> list[ProjectFile]:
         if not content:
             continue
 
+        print(file_path)
+        print(f"Reading: {file_path}")
+            
         python_files.append(
             ProjectFile(
                 path=file_path,
