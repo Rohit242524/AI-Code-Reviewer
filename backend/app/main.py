@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
@@ -13,6 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "static"
 TEMPLATE_DIR = BASE_DIR / "templates"
 
+
+load_dotenv()
 app = FastAPI()
 
 app.mount(

@@ -19,7 +19,7 @@ genai.configure(api_key=api_key)
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 
-def gen_review(code: str):
+def stream_review(code: str):
 
     prompt = build_review_prompt(code)
 
@@ -43,6 +43,14 @@ def gen_project_review(files):
         yield f"Reviewing: {file.path}\n"
         yield "=" * 60 + "\n\n"
 
-        yield from gen_review(file.content)
+        yield from stream_review(file.content)
 
         yield "\n\n"
+
+def generate_review(code: str) -> str:
+
+    prompt = build_review_prompt(code)
+
+    response = model.generate_content(prompt)
+
+    return response.text
